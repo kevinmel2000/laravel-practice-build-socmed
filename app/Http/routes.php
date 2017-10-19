@@ -55,5 +55,9 @@ Route::group(['middleware'=>'auth'],function(){
 		'as' => 'logout'
 	]);
 
+	Route::post('/edit',[
+		'uses' => 'PostController@postEditPost',
+		'as' =>'edit'
+	]);
 });
 
