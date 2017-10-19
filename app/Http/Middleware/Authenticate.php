@@ -23,7 +23,7 @@ class Authenticate
                 return response('Unauthorized.', 401);
             } else {
                  Session::put('oldUrl',$request->url());
-                return redirect()->route('dashboard');
+                return redirect()->route('home');
             }
         }
 

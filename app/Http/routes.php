@@ -12,12 +12,15 @@
 */
 
 Route::get('/', function () {
-	if (Auth::check()) {
-   		return view('dashboard');
-   	}
-   	else{
-  		return view('welcome');
-   	}
+
+		if (Auth::check()) {
+   			# code...
+   			return redirect()->route('dashboard');
+   		}
+   		else{
+   			return view('welcome');
+   		}
+  		
 })->name('home');
 
 	Route::post('/signup',[
@@ -30,20 +33,26 @@ Route::get('/', function () {
 			'as'=> 'signin'
 	]);
 
-Route::group(['middleware'=>'guest'],function(){
-
-});
-
 Route::group(['middleware'=>'auth'],function(){
 
 	Route::get ('/dashboard',[
-		'uses'=> 'UserController@getDashboard',
+		'uses'=> 'PostController@getDashboard',
 		'as'=> 'dashboard'
 	]);
 
 	Route::post ('/createpost',[
 		'uses'=> 'PostController@postCreatePost',
 		'as'=> 'post.create'
+	]);
+
+	Route::get('/delete-post/{post_id}',[
+		'uses'=> 'PostController@getDeletePost',
+		'as'=> 'post.delete'
+	]);
+
+	Route::get('/logout',[
+		'uses' => 'UserController@getLogout',
+		'as' => 'logout'
 	]);
 
 });

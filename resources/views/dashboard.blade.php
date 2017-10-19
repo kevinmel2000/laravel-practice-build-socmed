@@ -26,31 +26,23 @@
 						what other ppl say...
 					</h3>
 				</header>
-				<article class="post">
-					<p> Loorefsd ipusm ekksk djksjds</p>
-					<div class="info">
-						Posted by  memek 122 feb 2010
-					</div>
-					<div class="interaction">
-						<a href="#">Like</a>
-						<a href="#">Dsilike</a>
-						<a href="#">Edit </a>
-						<a href="#">Delete</a>
-					</div>
-				</article>
 
+				@foreach($posts as $post)
 				<article class="post">
-					<p> Loorefsd ipusm ekksk djksjds</p>
+					<p> {{$post->body}}</p>
 					<div class="info">
-						Posted by  memek 122 feb 2010
+						Posted by  {{$post->user->first_name}} on  {{$post->created_at}}
 					</div>
 					<div class="interaction">
 						<a href="#">Like</a>
 						<a href="#">Dsilike</a>
 						<a href="#">Edit </a>
-						<a href="#">Delete</a>
+						<a href="{{ route('post.delete' ,['post_id' => $post->id]) }}">Delete</a>
 					</div>
 				</article>
+				@endforeach
+				
+				
 			</div>
 		</section>
 @endsection

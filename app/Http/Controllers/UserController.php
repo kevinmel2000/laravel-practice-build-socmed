@@ -8,18 +8,11 @@ use App\Http\Requests;
 use App\User;
 use Session;
 
-
 class UserController extends Controller
 {
    public function postSignUp(Request $request){
 
    	//untuk sign up 
-   	if (Auth::check()) {
-   		# code...
-   		return view('check');
-   	}
-
-   	else{
 
 	   	     $this->validate($request, [
 	   	     	'email' => 'required|email|unique:users',
@@ -47,7 +40,7 @@ class UserController extends Controller
 	       }
 
 	   		 return view('dashboard');
-	   	}
+	   	
    }
 
    public function postSignIn(Request $request)
@@ -55,11 +48,6 @@ class UserController extends Controller
 
    	//untuk  sign in
 
-   	 if (Auth::check()) {
-   		# code...
-   		return view('check');
-   	}
-   	else{
 
 		   	$this->validate($request, [
 		   	     	'email' => 'required|email',
@@ -76,15 +64,16 @@ class UserController extends Controller
 		                 Session::forget('oldUrl');
 		                 return redirect()->to($oldUrl);
 		             }
-		   		return view('dashboard'); // kalau berhasil login
+		   		return redirect()-> route('dashboard');  // kalau berhasil login
 		   	}
 		   	return redirect()->back();
-		}
+	
    	
    }
 
-
-   public function getDashboard(){
-   	 return view('dashboard');
+   public function getLogout(){
+   	 Auth::logout();
+   	 return redirect()->route('home');
    }
+  
 }
