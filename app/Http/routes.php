@@ -25,12 +25,14 @@ Route::get('/', function () {
 
 	Route::post('/signup',[
 			'uses'=> 'UserController@postSignUp',
-			'as'=> 'signup'
+			'as'=> 'signup',
+			'middleware' => 'guest'
 	]);
 
 	Route::post('/signin',[
 			'uses'=> 'UserController@postSignIn',
-			'as'=> 'signin'
+			'as'=> 'signin',
+			'middleware' => 'guest'
 	]);
 
 Route::group(['middleware'=>'auth'],function(){
@@ -58,6 +60,28 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::post('/edit',[
 		'uses' => 'PostController@postEditPost',
 		'as' =>'edit'
+	]);
+
+
+	Route::get('/account',[
+		'uses'=> 'UserController@getAccount',
+		'as'=> 'account'
+	]);
+
+	Route::post('/updateaccount',[
+		'uses'=> 'UserController@postSaveAccount',
+		'as' => 'account.save'
+	]);
+
+
+	Route::get('/userimage/{filename}',[
+		'uses' => 'UserController@getUserimage',
+		'as' => 'account.image'
+	]);
+
+	Route::post('/like',[
+		'uses' => 'PostController@postLikePost',
+		'as' => 'like'
 	]);
 });
 

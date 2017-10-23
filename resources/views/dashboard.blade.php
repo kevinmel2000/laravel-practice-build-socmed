@@ -6,14 +6,14 @@
 		<section class="row new-post">
 			<div class="col-md-6 col-md-offset-3">
 					<header>
-						<h3>what do you have to say </h3>
+						<h3>Tulis apa aja </h3>
 					</header>
 					<form action="{{ route('post.create')}}" method="post">
 						<div class="form-group">
-							<textarea name="body" id="new-post" rows="5" placeholder="your post" class="form-control"></textarea>
+							<textarea name="body" id="new-post" rows="5" placeholder="tulis apa saja" class="form-control"></textarea>
 						</div>
 						<hr>
-						<button type="submit" class="btn btn-primary">Create Post</button>
+						<button type="submit" class="btn btn-primary">Buat Post</button>
 						<input type="hidden" value="{{ Session::token() }}" name="_token">
 					</form>
 			</div>
@@ -22,7 +22,7 @@
 			<div class="col-md-6 col-md-offset-3">
 				<header>
 					<h3>
-						what other ppl say...
+						Apa yang orang lain bilang:
 					</h3>
 				</header>
 
@@ -30,11 +30,12 @@
 				<article class="post" data-postid="{{$post->id}}">
 					<p> {{$post->body}}</p>
 					<div class="info">
-						Posted by  {{$post->user->first_name}} on  {{$post->created_at}}
+						Ditulis oleh  {{$post->user->first_name}} pada Tanggal: {{$post->created_at}}
 					</div>
 					<div class="interaction">
-						<a href="#">Like</a>
-						<a href="#">Dsilike</a>
+						<a href="#" class="like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'You like this post' :'Like' : 'Like'}}</a>
+						<a href="#" class="like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 0 ? 'You do not like this post' :'Dislike' : 'Dislike'}}</a>
+
 						@if(Auth::user()== $post->user)
 
 							<a href="#" class="edit">Edit </a>
@@ -60,7 +61,7 @@
 		       <form>
 		       		<div class="form-group">
 		       			<label for="post-body">Edit the Post</label>
-		       			<textarea class="form-control" name="post-body" id="post-body"  rows="5"></textarea>
+		       			<textarea class="form-control" name="post-body" id="post-body" rows="5"></textarea>
 		       		</div>
 		       </form>
 		      </div>
@@ -73,7 +74,8 @@
 		</div><!-- /.modal -->
 
 		<script>
-			var token ='{{ Session::token() }}';
-			var url = '{{  route('edit') }}';
+			var token   = '{{ Session::token() }}';
+			var urlEdit = '{{  route('edit') }}';
+			var urlLike = '{{  route('like') }}';
 		</script>
 @endsection
